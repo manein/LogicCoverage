@@ -18,7 +18,7 @@ function Modal({close, error})
             <hr style = {{padding: 0, marginTop: "-10px"}}></hr> 
             
             {/* Main content: Explain the syntax rules */}
-            <p>{error? "One or more of the following were violated:":"Please following the below syntax"}</p>
+            <p>{error? "One or more of the following were violated:":"Please follow the below syntax"}</p>
             <ul>
                 <li>Variables should each be a single alphabetic character.</li>
                 <li>Parenthesis can be used to isolate expressions. Be sure each has a match.</li>

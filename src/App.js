@@ -47,8 +47,9 @@ const TruthTableGenerator = () => {
     const table = generateTruthTable(vars, expression);
     setTruthTable(table);
     setPredicateCoverage(findPredicateCoverage(table));
-    setCombinatorialCoverage(findCombinatorialCoverage(table));
-    setAcCoverage(findAcCoverage(table))
+    let combCov = findCombinatorialCoverage(table)
+    setCombinatorialCoverage(combCov);
+    setAcCoverage(findAcCoverage(combCov, vars, expression))
   };
 
   // Given the expression, generate the generic truth table
@@ -61,6 +62,7 @@ const TruthTableGenerator = () => {
       let evalExpr = expr;
 
       // Generate each answer for each row (final result; T or F)
+      // replaces each variable in the expression with true or false. (val is true or false)
       vars.forEach((variable, j) => {
         const val = !!(i & (1 << j));
         values[variable] = val;
@@ -72,7 +74,8 @@ const TruthTableGenerator = () => {
       try {
         // eslint-disable-next-line
         const result = eval(evalExpr);     // Evaluate to true or false
-        table.push({ ...values, result }); // add to the table
+        table.push({ ...values, result }); // add to the table. 2D Array which starts with truth values for each variable.
+                                           // and the last item, is the result, true or false.
         
         
       } catch (error) {
@@ -86,11 +89,55 @@ const TruthTableGenerator = () => {
     return table;
   };
 
-  // Finds active clause coverage (tbd)
-  const findAcCoverage = (table) => {
-    // TODO
-    return []
-  }
+  const findAcCoverage = (table, vars, expr) => {
+    const resultTable = [];
+    console.log(table)
+    
+    // Iterate through each variable
+    for (let variable of vars) {
+        let foundPair = false; // Flag to track if a satisfying pair is found for the current variable
+        
+        // Iterate through each row in the truth table
+        for (let row of table) {
+            let flippedRow = { ...row }; // Create a copy of the original row
+            
+            // Flip the boolean value of the current variable
+            flippedRow[variable] = !flippedRow[variable];
+            
+            // Re-evaluate the expression with all but the last element of the row (which is the result)
+            const evalExpr = expr.replace(new RegExp(Object.keys(flippedRow).slice(0, -1).join("|"), 'g'), matched => flippedRow[matched]);
+
+
+            // eslint-disable-next-line
+            const result = eval(evalExpr); // Evaluate with the flipped variable, if its false, this is a DETERMINATE VARIABLE
+            
+            // If the result changes to false, add both original and modified rows to the result table
+            // This variable was determinant for this expression!
+            if (!result) {
+              // Push the original row with the negated new result (which is the original result) appended at the end
+              row['result'] = !result;
+              resultTable.push(row);
+
+              // Push the modified row (variable flipped) with the result (false) appended at the end
+              flippedRow['result'] = result;
+              resultTable.push(flippedRow);
+    
+              
+              foundPair = true; // Set flag to true indicating a satisfying pair is found, only need one for each var
+              break; // Break the loop to move on to the next variable
+          }
+        }
+        
+        // If a satisfying pair is found, skip to the next variable
+        if (foundPair) {
+            continue;
+        }
+    }
+    
+    return resultTable;
+};
+
+
 
   // Returns a table of one true and one false case, the first of each from the truth table
   const findPredicateCoverage = (table) => {
