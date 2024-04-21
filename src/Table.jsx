@@ -1,7 +1,12 @@
 import React from 'react';
 
-// Renders a table of truth values with the given values and title.
-function Table({title, table, variables}) {
+/**
+ *  Renders a table of truth values with the given values and title.
+    Re-used for all tables and coverages.
+ * @param {Obect} Props passed from the main app, to reference these values and functions here.
+ * @returns HTML of the dynamic made table with the provided input.
+ */
+function Table({title, table, variables, toggleModal}) {
   return (
     <div style={{ 
       backgroundColor: "white", 
@@ -15,20 +20,26 @@ function Table({title, table, variables}) {
       width: "22%", 
       
     }}>
-      {/* Sticky header if scrolling*/}
+      {/* Sticky header if scrolling, stays on top to label the variables. */}
       <div style = {{
           position: "sticky", 
           top: "0",
           backgroundColor: "white", 
           zIndex: "1", 
           }}>
+          <div style={{padding: "10px", display: "flex", alignItems: "center", justifyContent: "space-between"}}>
+          <h2 style={{ fontWeight: "100", fontSize: "20px"}}>{title}</h2>  
 
-          <h2 style={{ fontWeight: "100", fontSize: "25px", paddingTop: "10px",}}>{title}</h2>  
+          {/* Adds a help button to learn what this coverage is about. */}
+            <button onClick={() => {toggleModal(title)}} style={{ cursor: "pointer", background: "none", border: "none", padding: 0 }}>
+              <img src="/info.png" alt="info" width="20px" height="20px" style={{ marginBottom: "7px" }} />
+            </button>
 
-          <hr style={{ marginTop: "10px" }}></hr>
+          </div>
+          <hr style={{ marginTop: "-2px" }}></hr>
       </div>
 
-          {/* Renders the table and spaces the entries */}
+          {/* Renders the table and spaces the entries as columns*/}
       <div style={{ display: "flex", flexDirection: "column" }}>
         {table.length ? (
           <table>
