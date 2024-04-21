@@ -37,7 +37,13 @@ const TruthTableGenerator = () => {
    * Takes the provided value from the input box, and stores it in program state.
    * @param {Element} e : The input box where an expression was updated.
    */
-  const handleExpressionChange = (e) => {setExpression(e.target.value); setError(false)}
+  const handleExpressionChange = (e) => {
+
+    // Replace english commands with symbols to avoid seeing them as variables
+    let expr = e.target.value.replace('or', '||').replace('OR', '||').replace('oR', '||').replace('Or', '||').replace('and', '&&').replace('AND', '&&').replace('And', '&&').replace('ANd', '&&').replace('AnD', '&&').replace('aNd', '&&').replace('aND', '&&').replace('anD', '&&').replace('not', '!').replace('NOT', '!').replace('Not', '!').replace('NOt', '!').replace('NoT', '!').replace('nOt', '!').replace('nOT', '!!').replace('noT', '&&');         
+       
+    setExpression(expr); 
+    setError(false)}
 
   /**
    * Pulls out all variables using REGEX from the provided expression
@@ -100,11 +106,18 @@ const TruthTableGenerator = () => {
       vars.forEach((variable, j) => {
         const val = !!(i & (1 << j));
         values[variable] = val;
+        
         evalExpr = evalExpr.replace(new RegExp(variable, 'g'), val ? '#' : '$'); // letters in 'false' or 'true' used as variables 
                                                                                  // caused bugs due to double replacement
       });
-      evalExpr = evalExpr.replace(/#/g, 'true').replace(/\$/g, 'false').replace('-', 'halt').replace('/', 'halt').replace('-', 'halt').replace('*', 'halt');         // fixes the above bug by converting after loop
+      // fixes the above bug by converting after loop
+      // The additional lines specify banned characters that we want to disallow.
+      evalExpr = evalExpr.replace(/#/g, 'true').replace(/\$/g, 'false').replace('-', 'halt').replace('/', 'halt').replace('-', 'halt').replace('*', 'halt')
       
+      if (vars[0] === "")
+      {
+        evalExpr = "halt"
+      }
       try {
         // eslint-disable-next-line
         const result = eval(evalExpr);     // Evaluate to true or false

@@ -89,9 +89,9 @@ function Modal({close, error, helpPage})
               {/* Render either a informational or accusational message */}
               <p>{error? "One or more of the following were violated:":"Please follow the below syntax"}</p>
               <ul>
-                  <li>To represent OR, use '||'</li>
-                  <li>To represent AND, use '&&'</li>
-                  <li>To represent NOT, use '!'</li>
+                  <li>To represent OR, use '||' or 'or'</li>
+                  <li>To represent AND, use '&&' or 'and'</li>
+                  <li>To represent NOT, use '!' or 'not'</li>
                   <li>Variables should each be a single alphabetic character.</li>
                   <li>Parenthesis can be used to isolate expressions. Be sure each has a match.</li>
                   <li>Variables must have one of the above operators between them</li>
