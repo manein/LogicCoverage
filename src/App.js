@@ -103,7 +103,7 @@ const TruthTableGenerator = () => {
         evalExpr = evalExpr.replace(new RegExp(variable, 'g'), val ? '#' : '$'); // letters in 'false' or 'true' used as variables 
                                                                                  // caused bugs due to double replacement
       });
-      evalExpr = evalExpr.replace(/#/g, 'true').replace(/\$/g, 'false').replace('-', 'halt').replace('/', 'halt');         // fixes the above bug by converting after loop
+      evalExpr = evalExpr.replace(/#/g, 'true').replace(/\$/g, 'false').replace('-', 'halt').replace('/', 'halt').replace('-', 'halt').replace('*', 'halt').replace('&&','*temp*').replace('&', 'halt').replace('*temp*', '&&').replace('||','*temp*').replace('|', 'halt').replace('*temp*', '||');         // fixes the above bug by converting after loop
       
       try {
         // eslint-disable-next-line
@@ -218,7 +218,7 @@ const TruthTableGenerator = () => {
       {isOpen && <Modal close = {toggleModal} error = {error} helpPage = {helpPage}></Modal>}
 
       {/* Renders /wraps the user input component. */}
-      <div style = {{display: "flex", marginTop: "2vh", marginBottom: "4vh", alignItems: "center", flexDirection: "column"}}>
+      <div style = {{marginLeft: window.innerWidth < 768? "15px": "0",marginRight: window.innerWidth < 768? "15px": "0", display: "flex", marginTop: "2vh", marginBottom: "4vh", alignItems: "center", flexDirection: "column"}}>
         <div style = {{backgroundColor: "white",  border:"1px solid #e8e8e8", borderRadius: "8px", padding: "3px"}}>
 
           {/* Renders a header with the input prompt, and a help button */}
