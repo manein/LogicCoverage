@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Table from './Table';
 import Modal from './Modal';
+import './app.css'; 
 
 document.body.style = 'background: #f2f2f2'; // Apply a nice gray background to the entire site
 
@@ -257,7 +258,7 @@ const TruthTableGenerator = () => {
       {/* Hide results when modal is open */}
       {/* Display all tables when closed. */}
     {!isOpen && (
-      <div style = {{display: "flex", justifyContent: "space-around"}}>
+      <div className="table-container">
         <Table title = "Truth Table" table = {truthTable} variables = {variables} toggleModal = {toggleModal}></Table>
         <Table title = "Predicate Coverage" table = {predicateCoverage} variables = {variables} toggleModal = {toggleModal}></Table>
         <Table title = "Combinatorial Coverage" table = {combinatorialCoverage} variables = {variables} toggleModal = {toggleModal}></Table>

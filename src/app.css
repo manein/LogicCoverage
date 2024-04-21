@@ -1,0 +1,14 @@
+/* Common styles (desktop / mobile) */
+.table-container {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  /* Media query for mobile */
+  /* Displays results vertically */
+  @media only screen and (max-width: 767px) {
+    .table-container {
+      flex-direction: column;
+    }
+  }
+  
