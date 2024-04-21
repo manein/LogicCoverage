@@ -3,12 +3,31 @@
     display: flex;
     justify-content: space-around;
   }
+
+.table-div {
+    background-color: white;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    height: 70vh;
+    overflow-y: auto;
+    width: 22%;
+}
   
-  /* Media query for mobile */
-  /* Displays results vertically */
-  @media only screen and (max-width: 767px) {
+  
+/* Media query for mobile */
+/* Displays results vertically */
+@media only screen and (max-width: 767px) {
     .table-container {
-      flex-direction: column;
+        flex-direction: column;
+        margin: 15px;
     }
-  }
+    .table-div {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+}
   

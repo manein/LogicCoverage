@@ -1,4 +1,5 @@
 import React from 'react';
+import './app.css'; 
 
 /**
  *  Renders a table of truth values with the given values and title.
@@ -8,18 +9,7 @@ import React from 'react';
  */
 function Table({title, table, variables, toggleModal}) {
   return (
-    <div style={{ 
-      backgroundColor: "white", 
-      border: "1px solid #e8e8e8", 
-      borderRadius: "8px", 
-      paddingLeft: "10px", 
-      paddingRight: "10px",
-      paddingBottom: "10px",
-      height: "70vh", 
-      overflowY: "auto", 
-      width: "22%", 
-      
-    }}>
+    <div className = "table-div">
       {/* Sticky header if scrolling, stays on top to label the variables. */}
       <div style = {{
           position: "sticky", 
