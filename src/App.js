@@ -103,7 +103,7 @@ const TruthTableGenerator = () => {
         evalExpr = evalExpr.replace(new RegExp(variable, 'g'), val ? '#' : '$'); // letters in 'false' or 'true' used as variables 
                                                                                  // caused bugs due to double replacement
       });
-      evalExpr = evalExpr.replace(/#/g, 'true').replace(/\$/g, 'false').replace('-', 'halt').replace('/', 'halt').replace('-', 'halt').replace('*', 'halt').replace('&&','*temp*').replace('&', 'halt').replace('*temp*', '&&').replace('||','*temp*').replace('|', 'halt').replace('*temp*', '||');         // fixes the above bug by converting after loop
+      evalExpr = evalExpr.replace(/#/g, 'true').replace(/\$/g, 'false').replace('-', 'halt').replace('/', 'halt').replace('-', 'halt').replace('*', 'halt');         // fixes the above bug by converting after loop
       
       try {
         // eslint-disable-next-line
