@@ -8,6 +8,8 @@ import './modal.css';
  */
 function Modal({close, error, helpPage}) 
 {
+  const isMobile = window.innerWidth < 768
+
   let helpContent // The description for the help page
   if (helpPage)   // Load the necessary HTML help page, if we opened a help menu.
   {
@@ -52,6 +54,16 @@ function Modal({close, error, helpPage})
       default: 
     }
   }
+  // Styles that apply whether the modal was opened due to an error or not
+  const otherStyles = {
+    background: "#fefefe",
+    margin: "15% auto",
+    padding: "20px",
+    border: "1px solid #e8e8e8",
+    borderRadius: "10px",
+    width: isMobile? "95%": "50%"
+  };
+
   return (
     <div className="modal-container">
         
@@ -93,16 +105,10 @@ function Modal({close, error, helpPage})
         
     </div>
   );
+
+  
 };
 
-// Styles that apply whether the modal was opened due to an error or not
-const otherStyles = {
-    background: "#fefefe",
-    margin: "15% auto",
-    padding: "20px",
-    border: "1px solid #e8e8e8",
-    borderRadius: "10px",
-    width: "50%"
-  };
+
 
 export default Modal;
